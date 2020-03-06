@@ -7,28 +7,13 @@ const QuestionSchema = new Schema({
         type: String,
         required: true
     },
-    answer1: {
-        type: String,
-        required: false
-    },
-    answer2: {
-        type: String,
-        required: false
-    },
-    answer3: {
-        type: String,
-        required: false
-    },
-    answer4: {
-        type: String,
-        required: false
-    },
-    answer5: {
-        type: String,
-        required: false
-    },
-    correct: {
-        type: Number
-    }
+    answers: [{
+        type: Schema.Types.ObjectID,
+        ref: 'Answer'
+    }],
+    correct: [{
+        type: Schema.Types.ObjectID,
+        ref: 'Answer'
+    }]
 });
 module.exports = mongoose.model('Question', QuestionSchema);

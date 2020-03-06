@@ -1,29 +1,27 @@
 import express from 'express';
 import graphqlHTTP from "express-graphql";
-import mongoose from "mongoose";
 import {schema} from './schema/schema';
-
-mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://enfase:enfase&*(@cluster0-etjqi.mongodb.net/quiz", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+import connectDatabase from './database';
 
 const app = express();
 const PORT = 4300;
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "OK"
+(async () => {
+    try {
+        const info = await connectDatabase();
+        console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    } catch (error) {
+        console.error('Unable to connect to database');
+        process.exit(1);
+    }
+
+    await app.use('/graphql', graphqlHTTP({
+            schema: schema,
+            graphiql: true
+        }),
+    );
+
+    await app.listen(PORT, () => {
+        console.log(`Server is listening on PORT ${PORT}`);
     });
-});
-
-app.use('/graphql', graphqlHTTP({
-        schema: schema,
-        graphiql: true
-    }),
-);
-
-app.listen(PORT, () => {
-    console.log("Server is listening on PORT ${PORT}");
-});
+})();

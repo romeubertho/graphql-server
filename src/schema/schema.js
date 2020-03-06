@@ -5,31 +5,34 @@ const typeDefs = `
 type Question{
   _id: ID!
   title: String!
-  answer1:String!
-  answer2:String!
-  answer3:String!
-  answer4:String!
-  answer5:String!
+  answers:[Answer!]!
+}
+
+type Answer{
+  _id: ID!
+  answer: String!
 }
 
 type Query{
 getQuestion(_id:ID!):Question,
-allQuestions:[Question!]!
+allQuestions:[Question!]!,
 }
 
 input QuestionInput{
 title: String!
-answer1:String!
-answer2:String!
-answer3:String!
-answer4:String!
-answer5:String!
+}
+
+input AnswerInput{
+answer:String!
 }
 
 type Mutation{
 createQuestion(input: QuestionInput) : Question,
+addAnswer(_qid:ID!,input:AnswerInput):Answer
 updateQuestion(_id:ID!,input:QuestionInput):Question,
-deleteQuestion(_id:ID!):Question
+updateAnswer(_id:ID!,input:AnswerInput):Answer,
+deleteQuestion(_id:ID!):Question,
+deleteAnswer(_id:ID!,_qid:ID!):Answer
 }
 
     `;

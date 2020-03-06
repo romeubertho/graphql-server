@@ -1,0 +1,1 @@
+export const databaseConfig = 'mongodb+srv://enfase:enfase&*(@cluster0-etjqi.mongodb.net/quiz';

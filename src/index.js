@@ -2,9 +2,12 @@ import express from 'express';
 import graphqlHTTP from "express-graphql";
 import {schema} from './schema/schema';
 import connectDatabase from './database';
+import cors from 'cors';
 
 const app = express();
 const PORT = 4300;
+
+app.use(cors());
 
 (async () => {
     try {

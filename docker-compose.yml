@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+
+  app:
+
+    container_name: graphql-server
+
+    restart: always
+
+    build: .
+
+    ports:
+
+      - "4300:4300"
+
+    links:
+
+      - mongo
+
+  mongo:
+
+    container_name: graphql-mongo
+
+    image: mongo
+
+    volumes:
+
+      - ./data:/data/db
+
+    ports:
+
+      - "27017:27017"
+
